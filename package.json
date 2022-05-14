@@ -1,0 +1,17 @@
+{
+  "name": "mmd-GraphSchema",
+  "version": "1.0.0",
+  "main": "./bin/index.js",
+  "description": "CLI for building a mermaid file from a GraphQL schema from The Graph protocol",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "graphql": "^16.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0"
+  },
+  "bin": {
+    "mmdSchema": "./bin/index.js"
+  }
+}

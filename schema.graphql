@@ -1,0 +1,174 @@
+type VisitorsInfo @entity {
+  id: ID!
+
+  "Number of minted token"
+  numTokens: BigInt!
+
+  "number of owners"
+  numOwners: BigInt!
+
+  "number of different account's owners including the ones that have sell/burn"
+  numAccounts: BigInt!
+
+  "Last Minted time in seconds"
+  lastMintDate: BigInt!
+
+  "Last transfer in seconds"
+  lastTransferDate: BigInt!
+
+  "Last Burned in seconds"
+  lastBurned: BigInt!
+}
+
+type Block @entity {
+  "Internal ID "
+  id: ID!
+
+  "event timestamp"
+  timestamp: BigInt!
+
+  "Block's number"
+  number: BigInt!
+
+  "Transactions contained in this block"
+  transactions: [Transaction!] @derivedFrom(field: "block")
+}
+
+type Token @entity {
+  "Id of the Token"
+  id: ID!
+
+  tokenID: BigInt!
+
+  "Owner's Account address"
+  owner: Account!
+
+  "URI that points the metadata of the NFT"
+  uri: String!
+
+  "Minted time in seconds (?)"
+  mintTime: BigInt!
+
+  "Transaction hash ultima vez que se tradeo"
+  transaction: Bytes!
+
+  "Current burned status"
+  burned: Boolean
+}
+
+type Account @entity {
+  "address of the Account"
+  id: ID!
+
+  "Address of the Account"
+  address: Bytes!
+
+  "Array of tokens owned by the Account"
+  tokens: [Token!]! @derivedFrom(field: "owner")
+
+  "number of tokens owned by the Account"
+  numTokens: BigInt!
+}
+
+enum TranasctionType {
+  MINT
+  BURN
+  TRANSFER
+}
+
+type Transaction @entity {
+  id: ID!
+
+  "Related block"
+  block: Block!
+
+  gasPrice: BigInt!
+
+  gasLimit: BigInt!
+}
+
+interface ERC721Transaction {
+  "Internal ID used for indexation"
+  id: ID!
+
+  "Seller account"
+  from: Account
+
+  "Buyer account"
+  to: Account
+
+  "Current transaction type"
+  type: TranasctionType!
+
+  "Related block"
+  block: Block!
+}
+
+type Burn implements ERC721Transaction @entity {
+  "hash of the transaction"
+  id: ID!
+
+  "Token transfer"
+  token: Token!
+
+  "Address of the sender"
+  from: Account
+
+  "Address of the receiver"
+  to: Account
+
+  "Transaction hash "
+  transaction: Bytes!
+
+  "Related block"
+  block: Block!
+
+  "Current transaction type"
+  type: TranasctionType!
+}
+
+type Mint implements ERC721Transaction @entity {
+  "hash of the transaction"
+  id: ID!
+
+  "Token transfer"
+  token: Token!
+
+  "Address of the sender"
+  from: Account
+
+  "Address of the receiver"
+  to: Account
+
+  "Transaction hash "
+  transaction: Bytes!
+
+  "Related block"
+  block: Block!
+
+  "Current transaction type"
+  type: TranasctionType!
+}
+
+type Transfer implements ERC721Transaction @entity {
+  "hash of the transaction"
+  id: ID!
+
+  "Token transfer"
+  token: Token!
+
+  "Address of the sender"
+  from: Account
+
+  "Address of the receiver"
+  to: Account
+
+  "Transaction hash "
+  transaction: Bytes!
+
+  "Related block"
+  block: Block!
+
+  "Current transaction type"
+  type: TranasctionType!
+}
