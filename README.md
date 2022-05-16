@@ -23,7 +23,6 @@ Another option is to copy the graphql.schema into the root of project an run
 node .
 
 Image Example
-![a](https://user-images.githubusercontent.com/944960/168407075-a11713f3-96a7-41bf-86a2-9f97ad160c51.jpg)
 
 ```mermaid
 classDiagram
