@@ -10,7 +10,7 @@ Create a Mermaid file from a schema.graphql from a subgraph for the graph protoc
 4.  create the image by copying the file data into
     https://mermaid-js.github.io/mermaid-live-editor/
 
-5.  Add the Image to your github subgraph :)
+5.  Add the Image to the README subgraph in github :)
 
 ---
 
