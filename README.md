@@ -130,4 +130,3 @@ Transfer --o Block : block
 Transfer --o TranasctionType : type
 ERC721Transaction <|-- Transfer
 ```
-Image Example
