@@ -103,22 +103,31 @@ class Transfer {
 	Block! block 
 	TranasctionType! type 
 }
-Block--Transaction
-Token--Account
-Account--Token
-Transaction--Block
-ERC721Transaction--Account
-ERC721Transaction--TranasctionType
-ERC721Transaction--Block
-Burn--Token
-Burn--Account
-Burn--Block
-Burn--TranasctionType
-Mint--Token
-Mint--Account
-Mint--Block
-Mint--TranasctionType
-Transfer--Token
-Transfer--Account
-Transfer--Block
-Transfer--TranasctionType
+Block --o Transaction : transactions
+Token --o Account : owner
+Account --o Token : tokens
+Transaction --o Block : block
+ERC721Transaction --o Account : from
+ERC721Transaction --o Account : to
+ERC721Transaction --o TranasctionType : type
+ERC721Transaction --o Block : block
+Burn --o Token : token
+Burn --o Account : from
+Burn --o Account : to
+Burn --o Block : block
+Burn --o TranasctionType : type
+ERC721Transaction <|-- Burn
+Mint --o Token : token
+Mint --o Account : from
+Mint --o Account : to
+Mint --o Block : block
+Mint --o TranasctionType : type
+ERC721Transaction <|-- Mint
+Transfer --o Token : token
+Transfer --o Account : from
+Transfer --o Account : to
+Transfer --o Block : block
+Transfer --o TranasctionType : type
+ERC721Transaction <|-- Transfer
+```
+Image Example
