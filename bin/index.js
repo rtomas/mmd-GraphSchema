@@ -35,7 +35,10 @@ const createMermaid = (fileName) => {
         element.fields?.forEach((field) => {
           // relationS
           let relation = getRelation(field)
-          if (relation != '') rel.push(element.name.value + '--' + getRelation(field))
+          if (relation != '')
+            rel.push(
+              `${element.name.value} --o ${getRelation(field)} : ${field.name.value}`,
+            )
 
           let type = getType(field)
           str = str.concat(`${TAB}${type} ${field.name.value} ${ENDLINE}`)
@@ -45,10 +48,11 @@ const createMermaid = (fileName) => {
         element.values.forEach((value) => {
           str = str.concat(`${TAB}${value.name.value} ${ENDLINE}`)
         })
-      } else if (element.interfaces != undefined && element.interfaces != 0) {
+      }
+      if (element.interfaces != undefined && element.interfaces.length != 0) {
         // relations with interfaces
-        let relation = getRelation(field.interfaces[0])
-        if (relation != '') rel.push(element.name.value + '--' + getRelation(field))
+        let relation = getInterface(element.interfaces[0])
+        if (relation != '') rel.push(`${relation} <|-- ${element.name.value}`)
       }
 
       str = str.concat('}', ENDLINE)
@@ -65,6 +69,14 @@ const createMermaid = (fileName) => {
     fs.writeFileSync('schema.mmd', str + relSTR)
   } catch (err) {
     console.log(err)
+  }
+}
+
+const getInterface = (element) => {
+  if (element.kind == 'NamedType') {
+    return element.name.value
+  } else {
+    return ''
   }
 }
 
